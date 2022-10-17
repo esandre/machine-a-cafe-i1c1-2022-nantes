@@ -85,5 +85,58 @@ namespace MachineACafeI1.Test
             var cafésFinaux = machine.NombreCafésServis;
             Assert.Equal(cafésInitiaux, cafésFinaux);
         }
+
+        [Fact(DisplayName = "ETANT donné qu'une tasse est détectée" +
+                            "QUAND on met 40cts " +
+                            "ALORS le café coule " +
+                            "ET aucun gobelet n'est consommé",
+            Skip = "Test tautologique")]
+        public void TestPasGobeletSiTasseDétectée()
+        {
+            // ETANT donné qu'une tasse est détectée
+            var machine = new MachineACafé
+            {
+                TasseDetectée = true
+            };
+
+            var cafésInitiaux = machine.NombreCafésServis;
+            var gobeletsInitiaux = machine.NombreGobelets;
+
+            // QUAND on met 40cts
+            machine.InsérerMonnaie(40);
+
+            // ALORS le café coule
+            var cafésFinaux = machine.NombreCafésServis;
+            Assert.Equal(cafésInitiaux + 1, cafésFinaux);
+
+            // ET aucun gobelet n'est consommé
+            var gobeletsFinaux = machine.NombreGobelets;
+            Assert.Equal(gobeletsInitiaux, gobeletsFinaux);
+        }
+
+        [Fact(DisplayName = "ETANT donne qu'il n'y a plus de gobelets " +
+              "ET qu'une tasse est détectée " +
+              "QUAND on met 40cts " +
+              "ALORS le café coule")]
+        public void TestTasseContournePénurieGobelet()
+        {
+            // ETANT donné qu'une tasse est détectée
+            var machine = new MachineACafé
+            {
+                TasseDetectée = true
+            };
+
+            var cafésInitiaux = machine.NombreCafésServis;
+
+            // ET qu'il n'y a plus de gobelets
+            machine.ViderStockGobelets();
+
+            // QUAND on met 40 cts
+            machine.InsérerMonnaie(40);
+            
+            // ALORS le café coule
+            var cafésFinaux = machine.NombreCafésServis;
+            Assert.Equal(cafésInitiaux + 1, cafésFinaux);
+        }
     }
 }

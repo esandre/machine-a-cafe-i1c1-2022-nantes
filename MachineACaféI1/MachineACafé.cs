@@ -7,7 +7,7 @@
 
         public void InsérerMonnaie(int nombreDeCentimes)
         {
-            if(_caféDisponible && _gobeletsDisponibles)
+            if(_caféDisponible && (_gobeletsDisponibles || TasseDetectée))
             {
                 ArgentEncaisséEnCentimes = nombreDeCentimes;
                 NombreCafésServis = 1;
@@ -16,6 +16,8 @@
 
         public int NombreCafésServis { get; private set; }
         public int ArgentEncaisséEnCentimes { get; private set; }
+        public bool TasseDetectée { private get; init; }
+        public int NombreGobelets { get; }
 
         public void ViderStockCafé()
         {

@@ -37,7 +37,23 @@ namespace MachineACafeI1.Test
             // ET tout l'argent est encaissé
             var argentEncaisséFinal = machine.ArgentEncaisséEnCentimes;
             Assert.Equal(argentEncaisséInitial + centimesInsérés, argentEncaisséFinal);
+        }
+        
+        [Fact(DisplayName = "ETANT DONNE qu'il n'y a plus de café QUAND on met 40cts ALORS l'argent est rendu")]
+        public void TestPénurieCafé()
+        {
+            // ETANT DONNE qu'il n'y a plus de café
+            var machine = new MachineACafé();
+            machine.ViderStockCafé();
 
+            var argentEncaisséInitial = machine.ArgentEncaisséEnCentimes;
+
+            // QUAND on met 40cts
+            machine.InsérerMonnaie(40);
+
+            // ALORS l'argent est rendu
+            var argentEncaisséFinal = machine.ArgentEncaisséEnCentimes;
+            Assert.Equal(argentEncaisséInitial, argentEncaisséFinal);
         }
     }
 }

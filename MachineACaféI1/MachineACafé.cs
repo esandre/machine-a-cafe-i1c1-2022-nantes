@@ -7,17 +7,23 @@
 
         public void InsérerMonnaie(int nombreDeCentimes)
         {
-            if(_caféDisponible && (_gobeletsDisponibles || TasseDetectée))
+            // ! Mutation
+            if(EauDisponible && _caféDisponible && (_gobeletsDisponibles || TasseDetectée))
             {
                 ArgentEncaisséEnCentimes = nombreDeCentimes;
                 NombreCafésServis = 1;
             }
+
+            NombreGobelets--;
+            NombreDosesCafé--;
         }
 
         public int NombreCafésServis { get; private set; }
         public int ArgentEncaisséEnCentimes { get; private set; }
         public bool TasseDetectée { private get; init; }
-        public int NombreGobelets { get; }
+        public int NombreGobelets { get; private set; }
+        public bool EauDisponible { private get; init; } = true;
+        public int NombreDosesCafé { get; private set; }
 
         public void ViderStockCafé()
         {
